@@ -27,9 +27,7 @@ export class HomePage {
 
   ionViewDidLoad(){
     this.items = [
-      {uid:"1", title:"item 1", description:"description 1", due:'2018-01-01'},
-      {uid:"2", title:"item 2", description:"description 2", due:'2017-01-02'},
-      {uid:"3", title:"item 3", description:"description 3", due:'2017-01-03'}
+     
     ];
 
     let filename:string = String(this.items.length+1) + ".todo";
@@ -64,8 +62,6 @@ export class HomePage {
 
   saveItem(item){
     this.items.push(item);
-
-    //this.file.checkDir(this.file.documentsDirectory, 'mydir').then(_ => console.log('Directory exists')).catch(err => console.log('Directory doesnt exist'));
     
     item.uid = this.items.length;
     console.log(item.title);
@@ -73,13 +69,11 @@ export class HomePage {
     
     this.file.writeFile(this.file.documentsDirectory, item.uid +'.todo', JSON.stringify(item), {replace: true})
      .then(() => {      
-       console.log("SAVED " + item.uid +'.todo')
-
-     
+       //console.log("SAVED " + item.uid +'.todo')
        
         let alert = this.alertCtrl.create({
-          title: 'New Friend!',
-          subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
+          title: 'Task Saved',
+          subTitle: '',
           buttons: ['OK']
         });
         alert.present();
