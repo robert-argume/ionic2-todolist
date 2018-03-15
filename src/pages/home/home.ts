@@ -15,13 +15,22 @@ import { AlertController } from 'ionic-angular';
 export class HomePage {
 
   public items =[];
+  public dirName:string = "todolist";
+  public dirPath:string;
 
   
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private uniqueDeviceID: UniqueDeviceID,public file:File, public alertCtrl: AlertController) {
  
     console.log("HEREEEEEEEEE");
-    this.file.checkDir(this.file.applicationStorageDirectory, 'mydir').then(_ => console.log('Directory exists')).catch(err => console.log('Directory doesnt exist'));
+    this.file.checkDir(this.file.applicationStorageDirectory, this.dirName)
+    .then(() => {
+      console.log('Directory exists');
+    })
+    .catch(err => {
+      console.log('Directory doesnt exist');
+    });
+    
     
   }
 
@@ -72,6 +81,8 @@ export class HomePage {
     console.log(item.title);
     console.log(item.uid);
     
+   
+
     this.file.writeFile(this.file.documentsDirectory, item.uid +'.todo', JSON.stringify(item), {replace: true})
      .then(() => {      
        //console.log("SAVED " + item.uid +'.todo')
