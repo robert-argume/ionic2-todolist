@@ -1,14 +1,21 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      TO DO LIST
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addItem()">Add Item</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="viewItem(item)">
+      <ion-label>{{item.title}}</ion-label>
+      <!-- <ion-label>{{item.due}}</ion-label> -->
+      <!-- <ion-datetime displayFormat="MM/DD/YYYY">{{item.due}}</ion-datetime> -->
+      <ion-label>{{item.due | date: "yyyy/MM/dd HH:mm"}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

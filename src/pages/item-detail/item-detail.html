@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        {{title}}
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+   
+  <ion-content>
+    <ion-card>
+      <ion-card-content>
+        {{description}} {{due | date: "yyyy/MM/dd HH:mm"  }}
+
+        <ion-list>
+ 
+            <ion-item>
+              <ion-label floating>Title</ion-label>
+              <ion-input type="text" [(ngModel)]="title"></ion-input>
+            </ion-item>
+         
+            <ion-item>
+              <ion-label floating>Description</ion-label>
+              <ion-input type="text" [(ngModel)]="description"></ion-input>
+            </ion-item>
+        
+            <ion-item>
+                <ion-label floating>Due Date</ion-label>
+                <ion-input  datetime="yyyy/MM/dd HH:mm" type="text" [(ngModel)]="due"></ion-input>
+            </ion-item>
+         
+          </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
