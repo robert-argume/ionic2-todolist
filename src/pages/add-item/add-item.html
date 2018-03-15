@@ -13,19 +13,19 @@
   <ion-list>
  
     <ion-item>
-      <ion-label floating>Title</ion-label>
+      <ion-label color="primary" floating>Title</ion-label>
       <ion-input type="text" [(ngModel)]="title"></ion-input>
     </ion-item>
  
     <ion-item>
-      <ion-label floating>Description</ion-label>
+      <ion-label color="primary"  floating>Description</ion-label>
       <ion-input type="text" [(ngModel)]="description"></ion-input>
     </ion-item>
 
     <ion-item>
-        <ion-label floating>Due Date</ion-label>
+        <ion-label color="primary"  floating>Due Date</ion-label>
         <!-- <ion-input type="DateTime" [(ngModel)]="due"></ion-input> -->
-        <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="due"></ion-datetime>
+        <ion-datetime displayFormat="MMM DD, YYYY HH:mm" max="2100" [(ngModel)]="due"></ion-datetime>
     </ion-item>
  
   </ion-list>
