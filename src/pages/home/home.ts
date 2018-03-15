@@ -35,22 +35,8 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
-    this.items = [
-     
-    ];
-
-    let filename:string = String(this.items.length+1) + ".todo";
-    this.file.readAsText(this.file.documentsDirectory, filename )
-    .then((fileStr) => {      
-      var fileObj = JSON.parse(String(fileStr));
-      console.log(fileObj);
-      this.items.push(fileObj);
-      console.log(this.items);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-    
+    this.items = [];
+    this.retrieveTasks();
   }
 
   addItem(){
@@ -71,6 +57,7 @@ export class HomePage {
 
   deleteItem(item){
     this.items.splice(item, 1);
+    this.saveTasks();
   }
 
 
@@ -81,26 +68,61 @@ export class HomePage {
     console.log(item.title);
     console.log(item.uid);
     
-   
-
-    this.file.writeFile(this.file.documentsDirectory, item.uid +'.todo', JSON.stringify(item), {replace: true})
-     .then(() => {      
-       //console.log("SAVED " + item.uid +'.todo')
-       
-        let alert = this.alertCtrl.create({
-          title: 'Task Saved',
-          subTitle: '',
-          buttons: ['OK']
-        });
-        alert.present();
-
-     })
-     .catch((err) => {
-       console.error(err);
-     });
-
+    this.saveTasks();
  
   }
 
+  // Save all items in the list to separated files
+  saveTasks(){
+    console.log(this.dirName);
+    this.file.createDir(this.file.documentsDirectory, this.dirName, true)
+    .then( (data) => {
+      console.log("dir created");
+      this.dirPath = data.toURL();
+      console.log(this.dirName);
+      this.items.forEach(element => {
+          console.log("FOR EACH ELEM IN LIST");
+          this.file.writeFile(this.dirPath, element.uid +'.todo', JSON.stringify(element), {replace: true})
+          .then(() => {   
+                console.log("WRITE SUCCESSFULL");   
+                let alert = this.alertCtrl.create({
+                  title: 'Task Saved',
+                  subTitle: element.uid +'.todo',
+                  buttons: ['OK']
+                });
+                alert.present();
+          })
+          .catch((err) => {
+                console.error(err);
+          });
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }
+
+  // Read directory with all task individual files and load the list for rendering in UI
+  retrieveTasks(){
+      this.file.listDir(this.file.documentsDirectory, this.dirName)
+      .then((result)=>{
+        result.forEach(file => {
+              //let filename:string = String(this.items.length+1) + ".todo";
+              this.file.readAsText(this.file.documentsDirectory, file.name )
+              .then((fileStream) => {      
+                var fileObj = JSON.parse(String(fileStream));
+                console.log(fileObj);
+                this.items.push(fileObj);
+                console.log(this.items);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
 }
