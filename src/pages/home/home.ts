@@ -60,6 +60,11 @@ export class HomePage {
     });
   }
 
+  deleteItem(item){
+    this.items.splice(item, 1);
+  }
+
+
   saveItem(item){
     this.items.push(item);
     
