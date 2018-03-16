@@ -36,6 +36,13 @@ export class HomePage {
 
   ionViewDidLoad(){
     this.items = [];
+    let alert = this.alertCtrl.create({
+      title: 'DID LOAD',
+      subTitle: '',
+      buttons: ['OK']
+    });
+    alert.present();
+    
     this.retrieveTasks();
   }
 
@@ -104,16 +111,39 @@ export class HomePage {
 
   // Read directory with all task individual files and load the list for rendering in UI
   retrieveTasks(){
+    let alert = this.alertCtrl.create({
+      title: 'RETRIEVE TASKS',
+      subTitle: '',
+      buttons: ['OK']
+    });
+    alert.present();
+
       this.file.listDir(this.file.documentsDirectory, this.dirName)
       .then((result)=>{
+        let alert = this.alertCtrl.create({
+          title: 'LISTING SUCCESSFUL',
+          subTitle: '',
+          buttons: ['OK']
+        });
+        alert.present();
         result.forEach(file => {
+
+          let alert = this.alertCtrl.create({
+            title: "FILENAME=" +file.name,
+            subTitle: '',
+            buttons: ['OK']
+          });
+          alert.present();
               //let filename:string = String(this.items.length+1) + ".todo";
               this.file.readAsText(this.file.documentsDirectory, file.name )
-              .then((fileStream) => {      
+              .then((fileStream) => {    
+                
+                
                 var fileObj = JSON.parse(String(fileStream));
                 console.log(fileObj);
                 this.items.push(fileObj);
                 console.log(this.items);
+
               })
               .catch((err) => {
                 console.error(err);
